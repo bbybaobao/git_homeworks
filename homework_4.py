@@ -11,3 +11,13 @@
 #
 # if not duplicate:
 #     print(f"{numbers} No")
+
+"""Task 2"""
+
+# N = int(input("Enter natural number N: "))
+# for i in range(1, N+1):
+#     square = i * i
+#     if str(square).endswith(str(i)):
+#         print(f"{i}*{i}={square}")
+# # str(square).endswith(str(i)) -- проверяет,
+# # заканчивается ли число той же цифрой

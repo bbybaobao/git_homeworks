@@ -50,3 +50,14 @@
 #     print(f"Odd: {odd_count}")
 # else:
 #     print("You enter 0.")
+
+"""Task 4"""
+
+# N = int(input("Enter number N: "))
+#
+# for i in range(1, N):
+#     if i * i <= N:
+#         squares = [str(x*x) for x in range(1, i+1)]
+#         print(f"{i*i} {' '.join(squares)}")
+#     else:
+#         break

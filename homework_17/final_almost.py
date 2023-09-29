@@ -200,9 +200,8 @@ class User(Player):
 class Game:
     def __init__(self, size=10):
         self.size = size
-        self.manual_placement = False  # Флаг, указывающий на ручное или случайное размещение кораблей
+        self.manual_placement = False
 
-        # Добавим запрос у пользователя о способе расстановки кораблей
         placement_choice = input("Хотите разместить корабли вручную? (y/n): ")
         if placement_choice.lower() == 'y':
             self.manual_placement = True

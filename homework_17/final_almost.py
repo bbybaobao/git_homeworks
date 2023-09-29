@@ -200,12 +200,41 @@ class User(Player):
 class Game:
     def __init__(self, size=10):
         self.size = size
-        pl = self.random_field()
+        self.manual_placement = False  # Флаг, указывающий на ручное или случайное размещение кораблей
+
+        # Добавим запрос у пользователя о способе расстановки кораблей
+        placement_choice = input("Хотите разместить корабли вручную? (y/n): ")
+        if placement_choice.lower() == 'y':
+            self.manual_placement = True
+            self.manual_field_placement()
+
+        pl = self.manual_field_placement() if self.manual_placement else self.random_field()
         co = self.random_field()
         co.hide = True
 
         self.computer = Computer(co, pl)
         self.us = User(pl, co)
+
+    def manual_field_placement(self):
+        print("Ручная расстановка кораблей.")
+        field = Field(size=self.size)
+        for length in [4, 3, 3, 2, 2, 2, 1, 1, 1, 1]:
+            while True:
+                try:
+                    print(field)
+                    print(f"Размещение корабля длиной {length}")
+                    x, y = map(int, input("Введите координаты (x y): ").split())
+                    direction = int(input("Выберите направление (0 - горизонтально, 1 - вертикально): "))
+                    ship = Ship(Dot(x, y), length, direction)
+                    field.add_ships(ship)
+                    break
+                except FieldWrongPlaceEx:
+                    print("Корабль не может быть размещен в данной позиции. Попробуйте снова.")
+                field.start()
+                return field
+
+        field.start()
+        return field
 
     def random_field(self):
         field = None
@@ -281,4 +310,5 @@ class Game:
 
 
 g = Game()
+g.manual_placement = True
 g.start()

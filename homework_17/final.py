@@ -30,7 +30,7 @@ class FieldWrongPlaceEx(FieldEx):
 
 class Ship:
     def __init__(self, bow, length, direction):
-        self.bow = bow  # Нос (начало) корабля.
+        self.bow = bow
         self.length = length
         self.direction = direction
         self.health = length
@@ -58,17 +58,17 @@ class Ship:
 
 class Color:
 
-    yellow = '\033[93m'  # Желтый яркий.
-    yellowB = '\033[1;93m'  # Желтый яркий жирный.
-    redB = '\033[1;91m'  # Красный жирный.
-    purple = '\033[95m'  # Фиолетовый яркий.
-    purpleB = '\033[1;95m'  # Фиолетовый яркий жирный.
-    purple2 = '\033[35m'  # Фиолетовый темный.
-    purple2B = '\033[1;35m'  # Фиолетовый темный жирный.
-    turquoise2B = '\033[1;36m'  # Бирюзовый темный жирный.
-    blueB = '\033[1;94m'  # Голубой яркий жирный.
-    blue2B = '\033[1;34m'  # Голубой темный жирный.
-    reset = '\033[0m'  # Стандартный, сброс.
+    yellow = '\033[93m'
+    yellowB = '\033[1;93m'
+    redB = '\033[1;91m'
+    purple = '\033[95m'
+    purpleB = '\033[1;95m'
+    purple2 = '\033[35m'
+    purple2B = '\033[1;35m'
+    turquoise2B = '\033[1;36m'
+    blueB = '\033[1;94m'
+    blue2B = '\033[1;34m'
+    reset = '\033[0m'
 
 
 def set_color(letter, color):
@@ -172,10 +172,25 @@ class Player:
 
 
 class Computer(Player):
+    def __init__(self, field, enemy):
+        super().__init__(field, enemy)
+        self.last_hit = None
+
     def ask(self):
-        d = Dot(randint(0, 8), randint(0, 8))
-        print(f"Ход компьютера: {d.x} {d.y}")
-        return d
+        if self.last_hit:
+            targets_around = [
+                Dot(self.last_hit.x + 1, self.last_hit.y),
+                Dot(self.last_hit.x - 1, self.last_hit.y),
+                Dot(self.last_hit.x, self.last_hit.y + 1),
+                Dot(self.last_hit.x, self.last_hit.y - 1)
+            ]
+            target = targets_around[randint(0, len(targets_around) - 1)]
+            print(f"Компьютер стреляет в: {target.x} {target.y}")
+            return target
+        else:
+            target = Dot(randint(0, 8), randint(0, 8))
+            print(f"Компьютер стреляет в: {target.x} {target.y}")
+            return target
 
 
 class User(Player):

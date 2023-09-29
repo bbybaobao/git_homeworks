@@ -217,10 +217,10 @@ class Game:
         self.size = size
         self.manual_placement = False
 
-        placement_choice = input("Хотите разместить корабли вручную? (y/n): ")
-        if placement_choice.lower() == 'y':
-            self.manual_placement = True
-            self.manual_field_placement()
+        # placement_choice = input("Хотите разместить корабли вручную? (y/n): ")
+        # if placement_choice.lower() == 'y':
+        #     self.manual_placement = True
+        #     self.manual_field_placement()
 
         pl = self.manual_field_placement() if self.manual_placement else self.random_field()
         co = self.random_field()
@@ -238,7 +238,7 @@ class Game:
                     print(field)
                     print(f"Размещение корабля длиной {length}")
                     x, y = map(int, input("Введите координаты (x y): ").split())
-                    direction = int(input("Выберите направление (0 - горизонтально, 1 - вертикально): "))
+                    direction = int(input("Выберите направление (0 - вертикально, 1 - горизонтально): "))
                     ship = Ship(Dot(x, y), length, direction)
                     field.add_ships(ship)
                     break
@@ -275,13 +275,25 @@ class Game:
         return field
 
     def greetings(self):
-        print("-" * 43)
-        print("|", set_color("           ИГРА МОРСКОЙ БОЙ            ".center(6), Color.yellowB), "|")
-        print("-" * 43)
-        print("|            \033[1;93mФормат ввода:\033[0m \033[1;34mx\033[0m \033[1;36my\033[0m"
-              "            |".center(6))
-        print("|", set_color("          'x' - номер строки           ".center(6), Color.blue2B), "|")
-        print("|", set_color("          'y' - номер столбца          ".center(6), Color.turquoise2B), "|")
+        print("-" * 60)
+        print("|", set_color("           ДОБРО ПОЖАЛОВАТЬ В ИГРУ 'МОРСКОЙ БОЙ'           ".center(60), Color.yellowB),
+              "|")
+        print("|", set_color(" Правила игры:".ljust(60), Color.blue2B), "|")
+        print("|", set_color(" 1. Ваша задача - потопить корабли противника.         ".ljust(60), Color.turquoise2B),
+              "|")
+        print("|",
+              set_color(" 2. Игровое поле представляет из себя квадрат размером 10x10.".ljust(60), Color.turquoise2B),
+              "|")
+        print("|",
+              set_color(" 3. Корабли можно располагать вручную или случайным образом.".ljust(60), Color.turquoise2B),
+              "|")
+        print("|", set_color(" 4. Доступные корабли: 1x4, 2x3, 3x2, 4x1.               ".ljust(60), Color.turquoise2B),
+              "|")
+        print("|", set_color(" 5. Компьютер будет стрелять ваши корабли на своем поле.  ".ljust(60), Color.turquoise2B),
+              "|")
+        print("|", set_color(" 6. Удачи в бою!                                        ".ljust(60), Color.turquoise2B),
+              "|")
+        print("-" * 60)
 
     def loop(self):
         num = 0
@@ -320,6 +332,10 @@ class Game:
 
     def start(self):
         self.greetings()
+        placement_choice = input("Хотите разместить корабли вручную? (да/нет): ")
+        if placement_choice.lower() == 'да':
+            self.manual_placement = True
+            self.manual_field_placement()
         self.loop()
 
 

@@ -217,11 +217,6 @@ class Game:
         self.size = size
         self.manual_placement = False
 
-        # placement_choice = input("Хотите разместить корабли вручную? (y/n): ")
-        # if placement_choice.lower() == 'y':
-        #     self.manual_placement = True
-        #     self.manual_field_placement()
-
         pl = self.manual_field_placement() if self.manual_placement else self.random_field()
         co = self.random_field()
         co.hide = True
@@ -274,9 +269,10 @@ class Game:
         field.start()
         return field
 
-    def greetings(self):
+    def greetings(self, player_name):
+        upper_name = player_name.upper()
         print("-" * 60)
-        print("|", set_color("           ДОБРО ПОЖАЛОВАТЬ В ИГРУ 'МОРСКОЙ БОЙ'           ".center(60), Color.yellowB),
+        print("|", set_color(f"  {upper_name}, ДОБРО ПОЖАЛОВАТЬ В ИГРУ 'МОРСКОЙ БОЙ'        ".center(60), Color.yellowB),
               "|")
         print("|", set_color(" Правила игры:".ljust(60), Color.blue2B), "|")
         print("|", set_color(" 1. Ваша задача - потопить корабли противника.         ".ljust(60), Color.turquoise2B),
@@ -331,7 +327,8 @@ class Game:
             num += 1
 
     def start(self):
-        self.greetings()
+        player_name = input("Введите ваше имя: ")
+        self.greetings(player_name)
         placement_choice = input("Хотите разместить корабли вручную? (да/нет): ")
         if placement_choice.lower() == 'да':
             self.manual_placement = True
